@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --job-name=slurm_serial       # Job name
+#SBATCH --mail-type=END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=ehar@stlawu.edu   # Where to send mail	
+#SBATCH --ntasks=1                    # Run on a single CPU
+#SBATCH --mem=1gb                     # Job memory request
+#SBATCH --time=96:05:00               # Time limit hrs:min:sec
+#SBATCH --output=genprime_%j.log      # Standard output and error log
+
+echo "Date              = $(date)"
+echo "Hostname          = $(hostname -s)"
+echo "Working Directory = $(pwd)"
+echo ""
+echo "Number of Nodes Allocated      = $SLURM_JOB_NUM_NODES"
+echo "Number of Tasks Allocated      = $SLURM_NTASKS"
+echo "Number of Cores/Task Allocated = $SLURM_CPUS_PER_TASK"
+
+module load python/anaconda3
+python ./genprime.py 4096 
+
+echo ""
+echo -n "Finished program at: "
+date
+echo ""
+
